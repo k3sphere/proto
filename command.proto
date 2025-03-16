@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/k3sphere/proto";
+
+message Command {
+    string body = 1;
+    string signature = 2;
+}
