@@ -1,10 +1,26 @@
 syntax = "proto3";
 
-package proto;
-
 option go_package = "github.com/k3sphere/proto";
 
 message Command {
-    string body = 1;
-    string signature = 2;
+    int64 timestamp = 1;
+    string audience = 2;
+    string auth = 3;
+    string signature = 4;
+    string clientData = 5;
+    oneof body {
+        string data = 100;
+        CreateSSHUserRequest createSSHUser = 101;
+        AttachSSHKeyRequest attachSSHKey = 102;
+    }
+}
+
+message CreateSSHUserRequest {
+    string username = 1;
+    string publicKey = 2;
+}
+
+message AttachSSHKeyRequest {
+    string username = 1;
+    string publicKey = 2;
 }
