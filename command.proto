@@ -2,6 +2,23 @@ syntax = "proto3";
 
 option go_package = "github.com/k3sphere/proto";
 
+enum ConnectionState {
+    ESTABLISHED = 0;
+    CLOSED = 1;
+    REJECTED = 2;
+    DROPPED = 3;
+}
+enum Direction {
+    IN = 0;
+    OUT = 1;
+}
+
+enum Protocol {
+    TCP = 0;
+    UDP = 1;
+    ICMP = 2;
+}
+
 message Command {
     int64 timestamp = 1;
     string audience = 2;
@@ -23,4 +40,25 @@ message CreateSSHUserRequest {
 message AttachSSHKeyRequest {
     string username = 1;
     string publicKey = 2;
+}
+
+
+message LogEntry {
+    string id = 1;
+    string reporter = 2;
+    int64 timestamp = 3;
+    string from = 4;
+    int32 fromPort = 5;
+    string to = 6;
+    int32 toPort = 7;
+    Direction direction = 8;
+    Protocol protocol = 9;
+    ConnectionState state = 10;
+    int64 inputBytes = 11;
+    int64 outputBytes = 12;
+}
+
+message LogPacket {
+    repeated LogEntry entries = 1;
+    etag string = 2;
 }
